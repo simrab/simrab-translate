@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/fs"
 	"io/ioutil"
 	"os"
@@ -20,7 +19,7 @@ import (
 
 func main() {
 	files := getFilesWithTranslations("./", ".json")
-	copyFiles(files, []string{"it", "fr", "de"})
+	copyFiles(files, []string{"de", "fr", "it"})
 	fakeTranslateText("it", "home")
 }
 
@@ -50,12 +49,12 @@ func copyFiles(files []string, langs []string) {
 	for _, file := range files {
 		// Copy file names
 		for _, lang := range langs {
-			copyFile(file, file[0:strings.LastIndex(file, "-")+1]+lang+".json")
+			copyFile(file, file[0:strings.LastIndex(file, "-")+1]+lang+".json", lang)
 		}
 	}
 }
 
-func copyFile(src string, dst string) {
+func copyFile(src string, dst string, lang string) {
 	sourceFileStat, err := os.Stat(src)
 	if err != nil {
 		fmt.Println(err)
@@ -69,8 +68,12 @@ func copyFile(src string, dst string) {
 		fmt.Println(err)
 		return
 	}
+	data := iterateValues(file, lang)
+	if data == nil {
+		return
+	}
 	// Copy copyFile into the new file
-	err = ioutil.WriteFile(dst, file, 0o644)
+	err = ioutil.WriteFile(dst, data, 0o644)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -83,23 +86,22 @@ func copyFile(src string, dst string) {
 	}
 	fileData.Sync()
 	defer fileData.Close()
-	vals, err := io.ReadAll(fileData)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	iterateValues(vals)
 }
 
-func iterateValues(val []byte) {
+func iterateValues(val []byte, lang string) []byte {
 	m := make(map[string]interface{})
 	if err := json.Unmarshal(val, &m); err != nil {
-		fmt.Println(err)
-		return
+		return nil
 	}
-	// for _, v := range m {
-	// 	fmt.Print(v)
-	// }
+	for i, v := range m {
+		m[i] = fmt.Sprintf("%v-%v", v, lang)
+		// fmt.Println(v)
+	}
+	jsonBytes, err := json.Marshal(m)
+	if err != nil {
+		return nil
+	}
+	return jsonBytes
 }
 
 // func translateText(targetLanguage, text string) (string, error) {
