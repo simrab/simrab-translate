@@ -9,7 +9,7 @@ import (
 // TODO: Organize functions into separate modules
 
 func main() {
-	files := fpicker.getFilesWithTranslations("./", ".json")
-	copy.copyFiles(files, []string{"de", "fr", "it"})
-	translate.fakeTranslateText("it", "home")
+	files := fpicker.GetFilesWithTranslations("./", ".json")
+	copy.CopyFiles(files, []string{"de", "fr", "it"})
+	translate.FakeTranslateText("it", "home")
 }

@@ -33,7 +33,7 @@ import (
 // 	return resp[0].Text, nil
 // }
 
-func fakeTranslateText(targetLanguage, text string) (string, error) {
+func FakeTranslateText(targetLanguage, text string) (string, error) {
 	ctx := context.Background()
 
 	lang, err := language.Parse(targetLanguage)

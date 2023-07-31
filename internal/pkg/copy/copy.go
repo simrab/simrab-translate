@@ -1,4 +1,4 @@
-package format
+package copy
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"bitbucket.org/simrab/simrab-translate/internal/pkg/format"
 )
 
-func copyFiles(files []string, langs []string) {
+func CopyFiles(files []string, langs []string) {
 	for _, file := range files {
 		// Copy file names
 		for _, lang := range langs {
@@ -32,7 +32,7 @@ func copyFile(src string, dst string, lang string) {
 		fmt.Println(err)
 		return
 	}
-	data := iterateValues(file, lang)
+	data := format.IterateValues(file, lang)
 	if data == nil {
 		return
 	}

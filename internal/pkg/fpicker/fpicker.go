@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func getFilesWithTranslations(root string, ext string) []string {
+func GetFilesWithTranslations(root string, ext string) []string {
 	var files []string
 	// Get all files with .en extension
 	e := filepath.WalkDir(root, func(s string, d fs.DirEntry, e error) error {

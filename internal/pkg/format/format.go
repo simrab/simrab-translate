@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func iterateValues(val []byte, lang string) []byte {
+func IterateValues(val []byte, lang string) []byte {
 	m := make(map[string]interface{})
 	if err := json.Unmarshal(val, &m); err != nil {
 		return nil
