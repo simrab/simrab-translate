@@ -1,5 +1,14 @@
 package format
 
+import (
+	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
+
+	"bitbucket.org/simrab/simrab-translate/internal/pkg/format"
+)
+
 func copyFiles(files []string, langs []string) {
 	for _, file := range files {
 		// Copy file names

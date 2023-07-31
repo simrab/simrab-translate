@@ -1,9 +1,9 @@
 package main
 
 import (
-	"bitbucket.org/simrab/project-trsimrab/pkg/copy"
-	"bitbucket.org/simrab/project-trsimrab/pkg/fpicker"
-	"bitbucket.org/simrab/project-trsimrab/pkg/translate"
+	"bitbucket.org/simrab/simrab-translate/internal/pkg/copy"
+	"bitbucket.org/simrab/simrab-translate/internal/pkg/fpicker"
+	"bitbucket.org/simrab/simrab-translate/internal/pkg/translate"
 )
 
 // TODO: Organize functions into separate modules
