@@ -12,7 +12,6 @@ func IterateValues(val []byte, lang string) []byte {
 	}
 	for i, v := range m {
 		m[i] = fmt.Sprintf("%v-%v", v, lang)
-		// fmt.Println(v)
 	}
 	jsonBytes, err := json.Marshal(m)
 	if err != nil {
