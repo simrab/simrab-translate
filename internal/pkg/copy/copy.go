@@ -36,7 +36,7 @@ func copyFile(src string, dst string, lang string) {
 		return
 	}
 	// Copy copyFile into the new file
-	err = ioutil.WriteFile(dst, data, 0o644)
+	err = os.WriteFile(dst, data, 0o644)
 	if err != nil {
 		fmt.Println(err)
 		return
