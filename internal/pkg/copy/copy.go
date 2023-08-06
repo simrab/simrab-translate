@@ -2,7 +2,6 @@ package copy
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -27,7 +26,7 @@ func copyFile(src string, dst string, lang string) {
 	if !sourceFileStat.Mode().IsRegular() {
 		fmt.Println("not a regular file")
 	}
-	file, err := ioutil.ReadFile(src)
+	file, err := os.ReadFile(src)
 	if err != nil {
 		fmt.Println(err)
 		return
