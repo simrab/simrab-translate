@@ -3,12 +3,12 @@ package format
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"testing"
 )
 
 func TestIterateValues(t *testing.T) {
-	file, err := ioutil.ReadFile("./mockTranslate.en.json")
+	file, err := os.ReadFile("./mockTranslate.en.json")
 	if err != nil {
 		t.Errorf("can't find mock file")
 		return
