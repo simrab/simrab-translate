@@ -47,7 +47,7 @@ func FakeTranslateText(targetLanguage, text string) (string, error) {
 		return "", err
 	}
 	defer client.Close()
-
+  // TODO Add this as optional to enable transaltion from google cloud
 	// resp, err := client.Translate(ctx, []string{text}, lang, nil)
 	// if err != nil {
 	// 	return "", fmt.Errorf("Translate: %w", err)

@@ -12,11 +12,12 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "simrab-translate",
-	Short: "This cli can be used to translate json files",
+	Short: "This cli can be used to translate json files, or find missing translations key given specific pattern",
 	Long: `This cli can be used to translate json files with key: value.
 		You need at least one file with en in his name and a .json format. 
 		You also need to specify a language: 
-a	ES: simrab-translate translate [lang] [lang]`,
+		ES: simrab-translate translate [lang] [lang]
+		EN: simrab-translate missing [lang] [lang]`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
