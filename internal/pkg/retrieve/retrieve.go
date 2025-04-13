@@ -15,13 +15,17 @@ type MissingTranslationKeys struct {
 	MissingTranslationKeys map[string]bool `json:"missingTranslationKeys"`
 }
 
-func GetMissingKeys(searchDir, referenceFile, outputFile string) {
+// isTargetFile checks if the file has .ts or .html extension
+func isTargetFile(path string) bool {
+	ext := strings.ToLower(filepath.Ext(path))
+	return ext == ".ts" || ext == ".html"
+}
 
+func GetMissingKeys(searchDir, referenceFile, outputFile string) {
 	// Compile the regex patterns for translation keys
 	patterns := []*regexp.Regexp{
 		regexp.MustCompile(`'([^']*)'[ ]*\|[ ]*translate`),
 		regexp.MustCompile(`translate[ ]*\([ ]*'([^']*)'[ ]*\)`),
-		regexp.MustCompile(`'([^']*)'[ ]*\|[ ]*translate`),
 	}
 
 	// Map to store unique translation keys
@@ -33,8 +37,8 @@ func GetMissingKeys(searchDir, referenceFile, outputFile string) {
 			return err
 		}
 
-		// Skip directories and hidden files
-		if info.IsDir() || strings.HasPrefix(filepath.Base(path), ".") {
+		// Skip directories, hidden files, and non-target files
+		if info.IsDir() || strings.HasPrefix(filepath.Base(path), ".") || !isTargetFile(path) {
 			return nil
 		}
 
@@ -68,6 +72,8 @@ func GetMissingKeys(searchDir, referenceFile, outputFile string) {
 		os.Exit(1)
 	}
 
+	fmt.Printf("Found %d total translation keys in .ts and .html files.\n", len(foundKeys))
+
 	// Read reference file
 	referenceData, err := os.ReadFile(referenceFile)
 	if err != nil {
@@ -95,6 +101,8 @@ func GetMissingKeys(searchDir, referenceFile, outputFile string) {
 		}
 	}
 
+	fmt.Printf("Found %d translation keys that are not in the reference file.\n", len(missingKeys))
+
 	// Create JSON structure for missing keys
 	missingKeysStruct := MissingTranslationKeys{
 		MissingTranslationKeys: missingKeys,
@@ -113,7 +121,7 @@ func GetMissingKeys(searchDir, referenceFile, outputFile string) {
 		os.Exit(1)
 	}
 
-	fmt.Printf("\nMissing translation keys saved to %s\n", outputFile)
+	fmt.Printf("Missing translation keys saved to %s\n", outputFile)
 	fmt.Print("Processing completed.")
 }
 
